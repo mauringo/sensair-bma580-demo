@@ -46,7 +46,9 @@ pio run -e esp32-c5-sensairshuttle -t upload
 pio device monitor -b 115200
 ```
 
-`platformio.ini` pins the pioarduino platform release and declares the Adafruit display dependencies. The BMA580 library is vendored in `lib/BMA580` so this project does not depend on a separately published library release. See its [README](lib/BMA580/README.md) and [upstream provenance](lib/BMA580/UPSTREAM.md).
+`platformio.ini` pins the pioarduino platform release, declares the Adafruit display dependencies, and downloads [BMA580 v1.1.1](https://github.com/mauringo/arduino-bma580/tree/v1.1.1) directly from its published Git tag. PlatformIO installs it under `.pio/libdeps/`; no local copy is compiled. See the library’s [README](https://github.com/mauringo/arduino-bma580/blob/v1.1.1/README.md) and [upstream provenance](https://github.com/mauringo/arduino-bma580/blob/v1.1.1/UPSTREAM.md).
+
+Arduino accepted the Library Manager registration in [PR #9465](https://github.com/arduino/library-registry/pull/9465). Arduino Library Manager and PlatformIO use separate indexes; the pinned Git dependency works while Arduino finishes indexing the release.
 
 Opening the native USB serial monitor can reset this ESP32-C5 through USB DTR/RTS. USB can also disconnect during light sleep. An upload or monitor reset starts the wake counter again; `BOOT reset:…` identifies startup rather than a sensor wake.
 
@@ -58,6 +60,8 @@ The sensor runs at 100 Hz, ±8 g by default. The display temperature is the sens
 
 ## Host checks
 
+Build the project once to install its dependencies, then run:
+
 ```sh
 sh test/bma580/run.sh
 ```
@@ -67,11 +71,11 @@ These checks compile the real Bosch SensorAPI with Arduino/Wire mocks and cover 
 ## Repository layout
 
 - `src/`, `include/`: current firmware, panel initialization, countdown helper.
-- `lib/BMA580/`: reusable Arduino wrapper plus unmodified Bosch SensorAPI v4.2.0.
+- `.pio/libdeps/`: generated dependency directory containing the released BMA580 wrapper and Bosch SensorAPI v4.2.0 (not tracked in Git).
 - `test/bma580/`: host checks.
 - `legacy/`: earlier BMI423 and BMA580 sleep-debug experiments; not built by the current environment.
 - `third_party/espressif/`: display initialization attribution and license.
 
 ## Licensing and upstream work
 
-The original project code is distributed under [BSD-3-Clause](LICENSE). Bosch SensorAPI files retain their Bosch copyright and [BSD-3-Clause license](lib/BMA580/LICENSE). The display initialization sequence is adapted from Espressif code under Apache-2.0; see [the notice](third_party/espressif/NOTICE.md) and its accompanying license. These projects and their owners are credited for their own work.
+The original project code is distributed under [BSD-3-Clause](LICENSE). Bosch SensorAPI files retain their Bosch copyright and [BSD-3-Clause license](https://github.com/mauringo/arduino-bma580/blob/v1.1.1/LICENSE). The display initialization sequence is adapted from Espressif code under Apache-2.0; see [the notice](third_party/espressif/NOTICE.md) and its accompanying license. These projects and their owners are credited for their own work.

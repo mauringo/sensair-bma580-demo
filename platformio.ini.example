@@ -17,5 +17,6 @@ build_flags =
     -D BOARD_HAS_PSRAM
 
 lib_deps =
+    https://github.com/mauringo/arduino-bma580.git#v1.1.1
     adafruit/Adafruit GFX Library@^1.11.9
     adafruit/Adafruit ST7735 and ST7789 Library@^1.10.3
