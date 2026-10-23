@@ -46,9 +46,9 @@ pio run -e esp32-c5-sensairshuttle -t upload
 pio device monitor -b 115200
 ```
 
-`platformio.ini` pins the pioarduino platform release, declares the Adafruit display dependencies, and downloads [BMA580 v1.1.1](https://github.com/mauringo/arduino-bma580/tree/v1.1.1) directly from its published Git tag. PlatformIO installs it under `.pio/libdeps/`; no local copy is compiled. See the library’s [README](https://github.com/mauringo/arduino-bma580/blob/v1.1.1/README.md) and [upstream provenance](https://github.com/mauringo/arduino-bma580/blob/v1.1.1/UPSTREAM.md).
+`platformio.ini` pins the pioarduino platform release, declares the Adafruit display dependencies, and downloads [BMA580 v1.1.1](https://github.com/mauringo/arduino-bma580/tree/v1.1.1) from the versioned ZIP published in the official Arduino Library Manager index. PlatformIO installs it under `.pio/libdeps/`; no local copy is compiled. See the library’s [README](https://github.com/mauringo/arduino-bma580/blob/v1.1.1/README.md) and [upstream provenance](https://github.com/mauringo/arduino-bma580/blob/v1.1.1/UPSTREAM.md).
 
-Arduino accepted the Library Manager registration in [PR #9465](https://github.com/arduino/library-registry/pull/9465). Arduino Library Manager and PlatformIO use separate indexes; the pinned Git dependency works while Arduino finishes indexing the release.
+BMA580 **1.1.1** is available in the official Arduino Library Manager index. In Arduino IDE, open **Library Manager**, search for **BMA580** by **mauringo**, and install version **1.1.1**. This PlatformIO project uses the same [Arduino-distributed archive](https://downloads.arduino.cc/libraries/github.com/mauringo/BMA580-1.1.1.zip), pinned to that version; Arduino Library Manager and PlatformIO have separate registries.
 
 Opening the native USB serial monitor can reset this ESP32-C5 through USB DTR/RTS. USB can also disconnect during light sleep. An upload or monitor reset starts the wake counter again; `BOOT reset:…` identifies startup rather than a sensor wake.
 
